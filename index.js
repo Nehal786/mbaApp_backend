@@ -17,9 +17,9 @@ const {DB_URL, DB_PROD_URL} = require("./configs/db.config");
 
 let connectionString = DB_PROD_URL;
 
-if(process.env.NODE_ENV !== 'production'){
-    connectionString = DB_URL;
-}
+// if(process.env.NODE_ENV !== 'production'){
+//     connectionString = DB_URL;
+// }
 
 
 //Using the bodyParser middleware
@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
     try{    
         await mongoose.connect(connectionString);
         console.log('db connected');
-        //await init();
+        await init();
         //await initt();
     }
     catch(err){
