@@ -13,7 +13,14 @@ const User = require("./models/users.models");
 const bodyParser = require("body-parser");
 
 const { PORT } = require("./configs/server.configs");
-const {DB_URL} = require("./configs/db.config");
+const {DB_URL, DB_PROD_URL} = require("./configs/db.config");
+
+let connectionString = DB_PROD_URL;
+
+if(process.env.NODE_ENV !== 'production'){
+    connectionString = DB_URL;
+}
+
 
 //Using the bodyParser middleware
 app.use(bodyParser.json());
@@ -21,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 (async ()=> {
     try{    
-        await mongoose.connect(DB_URL);
+        await mongoose.connect(connectionString);
         console.log('db connected');
         //await init();
         //await initt();
